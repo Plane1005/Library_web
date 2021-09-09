@@ -6,10 +6,12 @@ import ColumnBuilder from './builder/ColumnBuilder';
 import { useRequest } from 'umi';
 import styles from './index.less';
 import ActionBuilder from './builder/ActionBuilder';
+import JetModal from './compoments/Modal';
 
 const BasicList = () => {
   const [page, setPage] = useState<number>(1);
   const [per_page, setPerPage] = useState<number>(10);
+  const [isModalVisible] = useState<boolean>(true);
 
   const init = useRequest<{ data: BasicListApi.Data }>(
     `https://public-api-v2.aspirantzhang.com/api/admins?X-API-KEY=antd&page=${page}&per_page=${per_page}`,
@@ -76,6 +78,7 @@ const BasicList = () => {
         />
         {afterTableLayout()}
       </Card>
+      <JetModal isModalVisible={isModalVisible} />
     </PageContainer>
   );
 };
