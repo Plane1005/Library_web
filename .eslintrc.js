@@ -8,6 +8,7 @@ module.exports = {
   rules: {
     'no-param-reassign': ['error', { props: false }],
     '@typescript-eslint/consistent-type-definitions': 'off',
+    'no-console': 'off',
   },
   overrides: [
     {

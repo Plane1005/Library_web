@@ -11,7 +11,9 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
+  mfsu: {},
   dva: {
+    immer: true,
     hmr: true,
   },
   layout: {
@@ -65,8 +67,4 @@ export default defineConfig({
       projectName: 'swagger',
     },
   ],
-  nodeModulesTransform: { type: 'none' },
-  mfsu: {},
-  webpack5: {},
-  exportStatic: {},
 });

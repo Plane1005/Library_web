@@ -6,6 +6,10 @@
   height: 100vh;
   overflow: auto;
   background: @layout-body-background;
+  // chrome 表单自动填充的背景色更改
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  }
 }
 
 .lang {

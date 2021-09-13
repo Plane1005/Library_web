@@ -1,21 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import { Alert, Space, message, Tabs } from 'antd';
+import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
+import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, Link, history, FormattedMessage, useModel } from 'umi';
-import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import { useIntl, Link, history, FormattedMessage, connect } from 'umi';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import logo from '@/assets/logo.png';
-
 import styles from './index.less';
 
 const LoginMessage: React.FC<{
@@ -31,7 +21,8 @@ const LoginMessage: React.FC<{
   />
 );
 
-const Login: React.FC = () => {
+const Login: React.FC = (props: any) => {
+  const { dispatch } = props;
   const [submitting, setSubmitting] = useState(false);
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
@@ -40,7 +31,17 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: API.LoginParams) => {
     setSubmitting(true);
-    setSubmitting(false);
+    dispatch({
+      type: 'user/login',
+      payload: {
+        ...values,
+      },
+      callback: async (res: any) => {
+        if (res) {
+          setSubmitting(false);
+        }
+      },
+    });
   };
   const { status, type: loginType } = userLoginState;
 
@@ -271,4 +272,8 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default connect((data: any) => {
+  return { user: data.user };
+})(Login);
+
+// export default Login
