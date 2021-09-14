@@ -3,7 +3,7 @@ import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, Link, history, FormattedMessage, connect, useModel } from 'umi';
+import { useIntl, Link, history, FormattedMessage, connect } from 'umi';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import logo from '@/assets/logo.png';
 import styles from './index.less';
@@ -26,7 +26,6 @@ const Login: React.FC = (props: any) => {
   const [submitting, setSubmitting] = useState(false);
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
 
   const intl = useIntl();
 
@@ -39,21 +38,8 @@ const Login: React.FC = (props: any) => {
       },
       callback: async (res: any) => {
         if (res) {
-          const data: any = { ...initialState };
-          if (initialState?.fetchUserInfo) {
-            await initialState?.fetchUserInfo().then((currentUser: any) => {
-              Object.assign(data, { currentUser });
-            });
-          }
-          console.log('====================================');
-          console.log('initialState');
-          console.log(data);
-          console.log('====================================');
-          setInitialState(data);
-          history.replace('/');
           setSubmitting(false);
-        } else {
-          setSubmitting(false);
+          history.push('/');
         }
       },
     });

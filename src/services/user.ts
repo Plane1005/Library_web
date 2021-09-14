@@ -8,3 +8,10 @@ export function queryLogin(payload: any) {
     ...payload,
   });
 }
+
+// 获取用户信息
+export function getUserInfo() {
+  return request(`/api/token/userinfo`, {
+    method: 'GET',
+  });
+}
